@@ -1,28 +1,18 @@
 import express from "express";
 import cors from "cors";
-import nodemailer from "nodemailer";
+import axios from "axios";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
-  },
-});
-
-import axios from "axios";
-
+// 🌀 Ritual Form Service — Brevo API version
 app.post("/submit", async (req, res) => {
   const data = req.body;
   console.log("✨ Received submission:", data);
 
   try {
+    // Compose and send through Brevo HTTP API
     const response = await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
@@ -39,14 +29,21 @@ app.post("/submit", async (req, res) => {
       }
     );
 
-    console.log("✅ Email sent via API:", response.data);
+    console.log("✅ Email sent via Brevo API:", response.data);
     res.json({ status: "ok", message: "Email sent successfully" });
   } catch (err) {
-    console.error("❌ Email send failed:", err.response?.data || err.message);
-    res.status(500).json({ status: "error", message: err.message });
+    console.error(
+      "❌ Email send failed:",
+      err.response?.data || err.message || err
+    );
+    res.status(500).json({ status: "error", message: "Email send failed" });
   }
 });
 
-app.get("/", (req, res) => res.send("🌿 Ritual Form Service is alive."));
+// Simple health check route
+app.get("/", (req, res) => {
+  res.send("🌿 Ritual Form Service is alive (Brevo API version).");
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`⚙️ Ritual Form Service running on port ${PORT}`));
