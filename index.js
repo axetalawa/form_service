@@ -19,8 +19,8 @@ app.post("/submit", async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      port: 465,
+      secure: true, // note the change
       auth: {
         user: process.env.FROM_EMAIL,
         pass: process.env.EMAIL_PASS,
