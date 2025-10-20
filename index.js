@@ -11,16 +11,13 @@ app.use(cors({ origin: "*" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Route
-app.post("/submit", async (req, res) => {
-  const data = req.body;
-  console.log("✨ Received submission:", data);
-
+// This async function will handle sending the email
+async function sendEmail(data) {
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
-      secure: true, // note the change
+      secure: true,
       auth: {
         user: process.env.FROM_EMAIL,
         pass: process.env.EMAIL_PASS,
@@ -35,11 +32,22 @@ app.post("/submit", async (req, res) => {
     };
 
     await transporter.sendMail(message);
-    res.json({ status: "ok", message: "Form submitted successfully" });
+    console.log("✅ Email sent successfully for:", data.email);
   } catch (error) {
-    console.error("❌ Error handling submission:", error);
-    res.status(500).json({ status: "error", error: error.message });
+    console.error("❌ Error sending email in background:", error);
   }
+}
+
+// Route
+app.post("/submit", (req, res) => {
+  const data = req.body;
+  console.log("✨ Received submission:", data);
+
+  // 1. Respond to the browser IMMEDIATELY
+  res.json({ status: "ok", message: "Form submission received" });
+
+  // 2. Send the email in the background without making the user wait
+  sendEmail(data);
 });
 
 // Health check
