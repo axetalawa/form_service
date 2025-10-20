@@ -16,22 +16,33 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+import axios from "axios";
+
 app.post("/submit", async (req, res) => {
   const data = req.body;
   console.log("✨ Received submission:", data);
 
   try {
-    const info = await transporter.sendMail({
-      from: `"Premordia Contact" <${process.env.FROM_EMAIL}>`,
-      to: process.env.TO_EMAIL,
-      subject: "🌀 New Ritual Form Submission",
-      text: `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`,
-    });
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: { name: "Premordia Contact", email: process.env.FROM_EMAIL },
+        to: [{ email: process.env.TO_EMAIL }],
+        subject: "🌀 New Ritual Form Submission",
+        textContent: `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_PASS,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    console.log("✅ Email sent:", info);
+    console.log("✅ Email sent via API:", response.data);
     res.json({ status: "ok", message: "Email sent successfully" });
   } catch (err) {
-    console.error("❌ Email send failed:", err);
+    console.error("❌ Email send failed:", err.response?.data || err.message);
     res.status(500).json({ status: "error", message: err.message });
   }
 });
