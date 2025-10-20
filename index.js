@@ -1,60 +1,41 @@
-// index.js
 import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
 
 const app = express();
-const PORT = process.env.PORT || 5001;
-
-// Middleware
-app.use(cors({ origin: "*" }));
-app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.json());
 
-// This async function will handle sending the email
-async function sendEmail(data) {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.BREVO_USER,
-        pass: process.env.BREVO_PASS,
-      },
-    });
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
+  },
+});
 
-    const message = {
-      from: process.env.FROM_EMAIL,
-      to: process.env.TO_EMAIL,
-      subject: "🌀 New Ritual Form Submission",
-      text: JSON.stringify(data, null, 2),
-    };
-
-    await transporter.sendMail(message);
-    console.log("✅ Email sent successfully for:", data.email);
-  } catch (error) {
-    console.error("❌ Error sending email in background:", error);
-  }
-}
-
-// Route
-app.post("/submit", (req, res) => {
+app.post("/submit", async (req, res) => {
   const data = req.body;
   console.log("✨ Received submission:", data);
 
-  // 1. Respond to the browser IMMEDIATELY
-  res.json({ status: "ok", message: "Form submission received" });
+  try {
+    const info = await transporter.sendMail({
+      from: `"Premordia Contact" <${process.env.FROM_EMAIL}>`,
+      to: process.env.TO_EMAIL,
+      subject: "🌀 New Ritual Form Submission",
+      text: `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`,
+    });
 
-  // 2. Send the email in the background without making the user wait
-  sendEmail(data);
+    console.log("✅ Email sent:", info);
+    res.json({ status: "ok", message: "Email sent successfully" });
+  } catch (err) {
+    console.error("❌ Email send failed:", err);
+    res.status(500).json({ status: "error", message: err.message });
+  }
 });
 
-// Health check
-app.get("/", (req, res) => {
-  res.send("🌿 Ritual Form Service is alive.");
-});
-
-app.listen(PORT, () =>
-  console.log(`⚙️ Ritual Form Service running on port ${PORT}`)
-);
+app.get("/", (req, res) => res.send("🌿 Ritual Form Service is alive."));
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`⚙️ Ritual Form Service running on port ${PORT}`));
