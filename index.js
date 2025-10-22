@@ -16,9 +16,9 @@ app.post("/submit", async (req, res) => {
     const response = await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
-        sender: { name: "Premordia Contact", email: process.env.FROM_EMAIL },
+        sender: { name: "JavedJaghai.com", email: process.env.FROM_EMAIL },
         to: [{ email: process.env.TO_EMAIL }],
-        subject: "🌀 New Ritual Form Submission",
+        subject: "Light wants to reach you.",
         textContent: `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`,
       },
       {
