@@ -4,7 +4,7 @@
 
 ---
 
-## 🌑 Phase I — Conception (July 2025)
+## Phase I — Conception (July 2025)
 
 **Objective:**  
 Create a lightweight backend to handle contact form submissions from static sites — self-hosted, serverless-friendly, and easy to replicate.
@@ -27,7 +27,7 @@ Create a lightweight backend to handle contact form submissions from static site
 
 ---
 
-## 🌒 Phase II — Brevo API Integration (August 2025)
+## Phase II — Brevo API Integration (August 2025)
 
 **Objective:**  
 Replace Nodemailer with **direct HTTP calls to Brevo’s transactional API** for more predictable delivery and lower latency.
@@ -49,7 +49,7 @@ Replace Nodemailer with **direct HTTP calls to Brevo’s transactional API** for
 
 ---
 
-## 🌓 Phase III — Railway Deployment (September 2025)
+## Phase III — Railway Deployment (September 2025)
 
 **Objective:**  
 Deploy a working prototype to [Railway](https://railway.app) and validate cross-domain communication from static sites.
@@ -71,7 +71,7 @@ Deploy a working prototype to [Railway](https://railway.app) and validate cross-
 
 ---
 
-## 🌔 Phase IV — Documentation & Example (October 2025)
+## Phase IV — Documentation & Example (October 2025)
 
 **Objective:**  
 Make the project publicly readable and reproducible by any developer in minutes.
@@ -93,7 +93,7 @@ Make the project publicly readable and reproducible by any developer in minutes.
 
 ---
 
-## 🌕 Phase V — Refinement & Future Trajectory (October 2025)
+## Phase V — Refinement & Future Trajectory (October 2025)
 
 **Objective:**  
 Prepare for small extensions and production hardening.
@@ -111,7 +111,7 @@ Prepare for small extensions and production hardening.
 
 ---
 
-## 🪶 Coda
+## Coda
 
 > *Every form is an invocation.  
 > Every submission, a brief message to the unseen systems that listen.*
