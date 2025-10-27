@@ -1,15 +1,7 @@
-Absolutely — here’s your complete **`README.md`** in one clean, copy-ready block, formatted and spaced exactly as it should appear in your GitHub repo.
-You can paste this directly into your `README.md` file.
-
----
-
-```markdown
 # Ritual Form Service
 
 > A minimal self-hosted backend for HTML forms — built with **Express**, **Axios**, and the **Brevo API**.  
 > Designed for static websites that need lightweight form handling without third-party plugins.
-
----
 
 ## ✴ Overview
 
