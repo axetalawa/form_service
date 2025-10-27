@@ -25,7 +25,7 @@ This project demonstrates:
 
 ---
 
-## 🧱 Repository Structure
+## Repository Structure
 
 ```
 
@@ -41,7 +41,7 @@ ritual-form-service/
 
 ---
 
-## ⚙️ Setup (Local)
+## Setup (Local)
 
 1. **Clone the repository**
    ```bash
@@ -81,7 +81,7 @@ ritual-form-service/
 
 ---
 
-## 📨 Example HTML Form
+## Example HTML Form
 
 You can point any static HTML form to your service endpoint:
 
@@ -99,7 +99,7 @@ You can point any static HTML form to your service endpoint:
 
 ---
 
-## 🚀 Deploy on Railway
+## Deploy on Railway
 
 1. Go to [Railway.app](https://railway.app)
 2. Create a new project and connect this repository.
@@ -163,7 +163,7 @@ Returns a plain-text health message confirming the service is online.
 
 ---
 
-## 🧩 Environment Variables
+## Environment Variables
 
 | Variable     | Description                                                             |
 | ------------ | ----------------------------------------------------------------------- |
@@ -174,7 +174,7 @@ Returns a plain-text health message confirming the service is online.
 
 ---
 
-## 🪶 Example Log Output
+## Example Log Output
 
 ```
 ✨ Received submission: { name: 'Alice', email: 'alice@example.com', message: 'Hello' }
@@ -184,7 +184,7 @@ Returns a plain-text health message confirming the service is online.
 
 ---
 
-## 📜 License
+## License
 
 MIT License © 2025 [Javed Saunja Jaghai](https://javedjaghai.com)
 Part of the **Mute Logic Lab** ecosystem.
